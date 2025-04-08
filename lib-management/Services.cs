@@ -16,7 +16,7 @@
             Console.Write("Enter book author: ");
             string author = Console.ReadLine();
 
-            return new Book(title, isbn, author);
+            return new Book(title, isbn, author, false);
         }
 
         public void DeleteBook(string title, HashSet<Book> list)
@@ -55,23 +55,52 @@
                 Console.WriteLine($"Title: {b.Title}, ISBN: {b.Isbn}, Author: {b.Author}");
             }
         }
-
-        public void FindBook(HashSet<Book> lib)
+        
+        public Book FindBook(HashSet<Book> lib, string title)
         {
-
-            Console.Write("Enter book title: ");
-            string title = Console.ReadLine();
 
             foreach (Book b in lib)
             {
                 if (b.Title.Equals(title, StringComparison.OrdinalIgnoreCase))
                 {
                     Console.WriteLine($"Title: {b.Title}, ISBN: {b.Isbn}, Author: {b.Author}");
-                    return;
+                    return b;
                 }
             }
             
             Console.WriteLine($"Book of title: {title} was not found.");
+            return null;
+        }
+
+        public void FindBook(HashSet<Book> lib)
+        {
+            Console.Write("Enter book title: ");
+            string title = Console.ReadLine();
+                
+            FindBook(lib, title);
+        }
+
+        public void BorrowBook(HashSet<Book> lib)
+        {
+            Console.Write("Enter book title: ");
+            string title = Console.ReadLine();
+
+            Book book = FindBook(lib, title);
+            
+            if (book != null)
+            {
+                if (book.Situation)
+                {
+                    Console.WriteLine("Book is already borrowed.");
+                }
+                else
+                {
+                    Console.WriteLine("Borrowing book...");
+                    book.Situation = true;
+                    lib.Add(book);
+                }
+            }
+            
         }
     }
 }

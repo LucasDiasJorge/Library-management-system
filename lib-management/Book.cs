@@ -6,12 +6,17 @@
         public string Title { get; }
         public string Isbn { get; }
         public string Author { get; }
+        
+        // Borrow situation
+        public bool Situation { set; get; }
+        
 
-        public Book(string title, string isbn, string author)
+        public Book(string title, string isbn, string author, bool situation)
         {
             Title = title;
             Isbn = isbn;
             Author = author;
+            Situation = situation;
         }
 
         public override bool Equals(object obj)

@@ -17,7 +17,8 @@ namespace lib_management
                 Console.WriteLine("2. Remove a Book");
                 Console.WriteLine("3. Display Library");
                 Console.WriteLine("4. Find a book");
-                Console.WriteLine("5. Exit");
+                Console.WriteLine("5. Borrow a book");
+                Console.WriteLine("6. Exit");
                 Console.Write("Enter your choice: ");
 
                 string choice = Console.ReadLine();
@@ -43,6 +44,10 @@ namespace lib_management
                         LibService.FindBook(lib);
                         break;
                     case "5":
+                        Console.WriteLine("Borrowing books...");
+                        LibService.BorrowBook(lib);
+                        break;
+                    case "6":
                         Console.WriteLine("Exiting...");
                         return;
                     default:
