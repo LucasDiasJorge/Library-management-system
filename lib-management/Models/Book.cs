@@ -1,4 +1,4 @@
-﻿namespace lib_management
+﻿namespace lib_management.Models
 {
 
     public class Book

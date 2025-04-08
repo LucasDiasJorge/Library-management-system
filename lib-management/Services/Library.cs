@@ -1,9 +1,11 @@
-﻿namespace lib_management
+﻿using lib_management.Models;
+
+namespace lib_management.Services
 {
 
-    public class Services
+    public class Library
     {
-        public Services() { }
+        public Library() { }
 
         public Book NewBook()
         {
@@ -80,7 +82,7 @@
             FindBook(lib, title);
         }
 
-        public void BorrowBook(HashSet<Book> lib)
+        public bool BorrowBook(HashSet<Book> lib)
         {
             Console.Write("Enter book title: ");
             string title = Console.ReadLine();
@@ -92,15 +94,42 @@
                 if (book.Situation)
                 {
                     Console.WriteLine("Book is already borrowed.");
+                    return false;
                 }
                 else
                 {
                     Console.WriteLine("Borrowing book...");
                     book.Situation = true;
                     lib.Add(book);
+                    return true;
                 }
             }
+            return false;
+        }
+        
+        public bool CheckoutBook(HashSet<Book> lib)
+        {
+            Console.Write("Enter book title: ");
+            string title = Console.ReadLine();
+
+            Book book = FindBook(lib, title);
             
+            if (book != null)
+            {
+                if (!book.Situation)
+                {
+                    Console.WriteLine("Book is free.");
+                    return false;
+                }
+                else
+                {
+                    Console.WriteLine("Checking out book...");
+                    book.Situation = false;
+                    lib.Add(book);
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

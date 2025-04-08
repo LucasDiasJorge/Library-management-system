@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using lib_management.models;
+using lib_management.Models;
+using lib_management.Services;
 
 namespace lib_management
 {
@@ -8,7 +11,10 @@ namespace lib_management
         static void Main(string[] args)
         {
             HashSet<Book> lib = new HashSet<Book>();
-            Services LibService = new Services();
+            Library LibService = new Library();
+            SessionManagement SessionManager = new SessionManagement();
+            
+            Session s = SessionManager.CreateSession();
 
             while (true)
             {
@@ -18,7 +24,8 @@ namespace lib_management
                 Console.WriteLine("3. Display Library");
                 Console.WriteLine("4. Find a book");
                 Console.WriteLine("5. Borrow a book");
-                Console.WriteLine("6. Exit");
+                Console.WriteLine("6. Checkout a book");
+                Console.WriteLine("7. Exit");
                 Console.Write("Enter your choice: ");
 
                 string choice = Console.ReadLine();
@@ -45,9 +52,24 @@ namespace lib_management
                         break;
                     case "5":
                         Console.WriteLine("Borrowing books...");
-                        LibService.BorrowBook(lib);
+                        if (s.BooksBorrowedQnt <= 3)
+                        {
+                            Console.WriteLine("Limit of borrowing books reached...");
+                            break;
+                        }
+                        if (LibService.BorrowBook(lib))
+                        {
+                            s.BookArithmetic(+1);
+                        }
                         break;
                     case "6":
+                        Console.WriteLine("Checkout books...");
+                        if (LibService.CheckoutBook(lib))
+                        {
+                            s.BookArithmetic(-1);
+                        }
+                        break;
+                    case "7":
                         Console.WriteLine("Exiting...");
                         return;
                     default:
