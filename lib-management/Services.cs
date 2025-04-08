@@ -55,5 +55,23 @@
                 Console.WriteLine($"Title: {b.Title}, ISBN: {b.Isbn}, Author: {b.Author}");
             }
         }
+
+        public void FindBook(HashSet<Book> lib)
+        {
+
+            Console.Write("Enter book title: ");
+            string title = Console.ReadLine();
+
+            foreach (Book b in lib)
+            {
+                if (b.Title.Equals(title, StringComparison.OrdinalIgnoreCase))
+                {
+                    Console.WriteLine($"Title: {b.Title}, ISBN: {b.Isbn}, Author: {b.Author}");
+                    return;
+                }
+            }
+            
+            Console.WriteLine($"Book of title: {title} was not found.");
+        }
     }
 }
